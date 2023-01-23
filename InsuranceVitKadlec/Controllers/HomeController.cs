@@ -2,6 +2,7 @@
 using InsuranceVitKadlec.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace InsuranceVitKadlec.Controllers
@@ -12,9 +13,11 @@ namespace InsuranceVitKadlec.Controllers
         {
         }
 
-        public IActionResult Index()
+        
+        // GET: Articles
+        public async Task<IActionResult> Index()
         {
-            return RedirectToAction("Index", "Articles");
+            return View(await context.Article.ToListAsync());
         }
 
         public IActionResult Privacy()

@@ -20,12 +20,12 @@ namespace InsuranceVitKadlec.Controllers
 
 
 
-
-        // GET: Articles
+     // GET: Articles
         public async Task<IActionResult> Index()
         {
               return View(await context.Article.ToListAsync());
         }
+   
 
         // GET: Articles/Details/5
         public async Task<IActionResult> Details(int? id)
