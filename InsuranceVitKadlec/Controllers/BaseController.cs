@@ -2,6 +2,8 @@
 using InsuranceVitKadlec.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 
 namespace InsuranceVitKadlec.Controllers
 {
@@ -23,11 +25,30 @@ namespace InsuranceVitKadlec.Controllers
 
         protected Insured GetCurrentInsured()
         {
+            
             string IdUser = this.userManager.GetUserId(this.User);
+            // když nebude přihlášený nikdo
+            if (string.IsNullOrEmpty(IdUser)) 
+                return null;
+            
             return context.Insured
+                .AsNoTracking() //nedívej se na změny
                 .Where(i => i.LoginId == IdUser)
-                .First();            
+                .FirstOrDefault();                
         }
 
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {   
+            if (this.User.IsInRole("Admin"))
+            {
+                ViewBag.FullName =  "Admin";
+            }
+            else
+            {
+                // když bude = null -> ? (bez ? nahlásí chybu) = FullName = null )
+                ViewBag.FullName = this.GetCurrentInsured()?.FullName??String.Empty;
+            }
+            base.OnActionExecuting(context);
+        }
     }
 }

@@ -8,6 +8,8 @@ namespace InsuranceVitKadlec.Models
         public int Id { get; set; }
         [ForeignKey(nameof(InsuredesInsurences))]
         public int InsuredesInsurencesId { get; set; }
+
+        public InsuredesInsurences InsuredesInsurences { get; set; }
         [DisplayName("Oznámení škodní události")]
         public string Name { get; set; }
         [DisplayName("Popis škodní události")]

@@ -66,8 +66,17 @@ namespace InsuranceVitKadlec.Controllers
         // GET: InsuredesInsurences/Create
         public IActionResult Create()
         {
-            ViewData["InsuredId"] = new SelectList(context.Insured, "Id", "Id");
-            ViewData["InsurenceId"] = new SelectList(context.Insurence, "Id", "Id");
+            var insureds = context.Insured.AsQueryable();
+
+            if (!this.User.IsInRole("Admin"))
+            {
+                Insured insured = this.GetCurrentInsured();
+
+                insureds = insureds.Where(i => i.Id == insured.Id).AsQueryable();
+            }
+
+            ViewData["InsuredId"] = new SelectList(insureds, "Id", "Name");
+            ViewData["InsurenceId"] = new SelectList(context.Insurence, "Id", "Name");
             return View();
         }
 

@@ -1,24 +1,23 @@
 ﻿@model InsuranceVitKadlec.Models.InsuredesInsurences
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Úprava služby";
 }
 
-<h1>Edit</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>InsuredesInsurences</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="InsuredId" class="control-label"></label>
-                <select asp-for="InsuredId" class="form-control" asp-items="ViewBag.InsuredId"></select>
-                <span asp-validation-for="InsuredId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                <div class="form-group" @(this.User.IsInRole("Admin") ? "" : "hidden")>
+                    <label asp-for="InsuredId" class="control-label"></label>
+                    <select asp-for="InsuredId" class="form-control" asp-items="ViewBag.InsuredId"></select>
+                    <span asp-validation-for="InsuredId" class="text-danger"></span>
+                </div>
+             <div class="form-group">
                 <label asp-for="InsurenceId" class="control-label"></label>
                 <select asp-for="InsurenceId" class="form-control" asp-items="ViewBag.InsurenceId"></select>
                 <span asp-validation-for="InsurenceId" class="text-danger"></span>
@@ -50,13 +49,14 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <br/>
+                <input type="submit" value="Uložit" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Zpět</a>
 </div>
 

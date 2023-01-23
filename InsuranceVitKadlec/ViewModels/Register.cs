@@ -14,5 +14,9 @@ namespace InsuranceVitKadlec.ViewModels
         [DisplayName("Potvrzení hesla")]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
+        [DisplayName("Nahrát foto")]
+        public IFormFile Picture { get; set; }
+
+
     }
 }

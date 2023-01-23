@@ -8,9 +8,38 @@ namespace InsuranceVitKadlec.Controllers
 {
     public class AccountsController : BaseController
     {
-        public AccountsController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ApplicationDbContext context) : base(userManager, signInManager, context)
+        private IWebHostEnvironment webHostEnvironment;
+
+        public AccountsController(
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            ApplicationDbContext context,
+            // zajištění cesty k wwwroot
+            IWebHostEnvironment webHostEnvironment) : base(userManager, signInManager, context)
         {
+            this.webHostEnvironment = webHostEnvironment;
         }
+
+        public string SaveFile(IFormFile formFile)
+        {
+            if (formFile == null)
+                return null;
+            string fileName = Guid.NewGuid().ToString("N") + Path.GetExtension(formFile.FileName);
+            string imagesDirectory = Path.Combine(
+                this.webHostEnvironment.WebRootPath,
+                "imagesClients");
+
+            string fullFileName = Path.Combine(imagesDirectory, fileName);
+
+            using (var stream = new FileStream(fullFileName, FileMode.Create))
+            {
+                formFile.CopyTo(stream);
+            }
+
+            return fileName;
+        }
+
+
 
         public IActionResult Index()
         {
@@ -30,6 +59,11 @@ namespace InsuranceVitKadlec.Controllers
           
             if (ModelState.IsValid)
             {
+                if(model.Password != model.ConfirmPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "Heslo není shodné s potvrzením.");
+                    return View(model);
+                }
                 var user = new IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -50,7 +84,7 @@ namespace InsuranceVitKadlec.Controllers
                         Smoker=model.Smoker,
                         IsMan= model.IsMan,
                         Email=model.Email,
-                        PhotoName=model.PhotoName,
+                        PhotoName=SaveFile(model.Picture), 
                         LoginId = user.Id
                         
                     };

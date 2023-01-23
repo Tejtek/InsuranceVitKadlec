@@ -1,31 +1,23 @@
-﻿@model IEnumerable<InsuranceVitKadlec.Models.InsuredesInsurences>
+﻿@model IEnumerable<InsuranceVitKadlec.Models.InsuredesInsurencesHistory>
 
-@if (this.User.IsInRole("Admin"))
-{
-    ViewData["Title"] = "Seznam všech služeb";
-}
-else if (this.User.Identity.IsAuthenticated)
-{
-    ViewData["Title"] = "Seznam vašich služeb";
+@{
+    ViewData["Title"] = "Index";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Nová služba</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-             @if (this.User.IsInRole("Admin"))
-             {
-                <th>
-                    @Html.DisplayNameFor(model => model.Insured)
-                </th>
-             }
-            
+           
             <th>
-                @Html.DisplayNameFor(model => model.Insurence)
+                @Html.DisplayNameFor(model => model.Insured.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Insurence.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.InsurenceValue)
@@ -40,7 +32,10 @@ else if (this.User.Identity.IsAuthenticated)
                 @Html.DisplayNameFor(model => model.ValidTo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TerminationReason)
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeOfChange)
             </th>
             <th></th>
         </tr>
@@ -48,13 +43,10 @@ else if (this.User.Identity.IsAuthenticated)
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            @if (this.User.IsInRole("Admin"))
-            {
-                <td>
-                    @Html.DisplayFor(modelItem => item.Insured.FullName)
-                </td>
-            }
             
+            <td>
+                @Html.DisplayFor(modelItem => item.Insured.FullName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Insurence.Name)
             </td>
@@ -71,12 +63,15 @@ else if (this.User.Identity.IsAuthenticated)
                 @Html.DisplayFor(modelItem => item.ValidTo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TerminationReason)
+                @Html.DisplayFor(modelItem => item.CreateDate)
             </td>
             <td>
-                   <!-- <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> -->
-                   <a asp-action="Details" asp-route-id="@item.Id">Podrobnosti</a>
-                   <!-- <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>-->
+                @Html.DisplayFor(modelItem => item.TypeOfChange)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

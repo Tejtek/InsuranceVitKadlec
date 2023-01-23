@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using InsuranceVitKadlec.Data;
 using InsuranceVitKadlec.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InsuranceVitKadlec.Controllers
 {
@@ -20,9 +21,23 @@ namespace InsuranceVitKadlec.Controllers
 
 
         // GET: InsuredInsurenceEvents
+        [Authorize]
         public async Task<IActionResult> Index()
         {
-              return View(await context.InsuredInsurenceEvent.ToListAsync());
+            var items = context.InsuredInsurenceEvent
+                .Include(i => i.InsuredesInsurences)
+                .Include(i => i.InsuredesInsurences.Insurence)
+                .Include(i => i.InsuredesInsurences.Insured)
+                .AsQueryable();
+            if (!this.User.IsInRole("Admin"))
+            {
+                Insured insured = this.GetCurrentInsured();
+
+                items = items
+                    .Where(i => i.InsuredesInsurences.InsuredId == insured.Id).AsQueryable();
+            }
+
+            return View(await items.ToListAsync());
         }
 
         // GET: InsuredInsurenceEvents/Details/5
@@ -34,6 +49,8 @@ namespace InsuranceVitKadlec.Controllers
             }
 
             var insuredInsurenceEvent = await context.InsuredInsurenceEvent
+                .Include(i => i.InsuredesInsurences)
+                .Include(i => i.InsuredesInsurences.Insurence)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (insuredInsurenceEvent == null)
             {
@@ -46,7 +63,21 @@ namespace InsuranceVitKadlec.Controllers
         // GET: InsuredInsurenceEvents/Create
         public IActionResult Create()
         {
+            var insuredInsurences = context.InsuredesInsurences
+                .Include(i=> i.Insurence)
+                .AsQueryable();
+
+            if (!this.User.IsInRole("Admin"))
+            {
+                Insured insured = this.GetCurrentInsured();
+
+                insuredInsurences = insuredInsurences.
+                    Where (i => i.InsuredId == insured.Id).AsQueryable();
+            }
+
+            ViewData["InsuredesInsurencesId"] = new SelectList(insuredInsurences, "Id", "Insurence.Name");
             return View();
+
         }
 
         // POST: InsuredInsurenceEvents/Create
@@ -66,6 +97,7 @@ namespace InsuranceVitKadlec.Controllers
         }
 
         // GET: InsuredInsurenceEvents/Edit/5
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || context.InsuredInsurenceEvent == null)
@@ -73,11 +105,18 @@ namespace InsuranceVitKadlec.Controllers
                 return NotFound();
             }
 
-            var insuredInsurenceEvent = await context.InsuredInsurenceEvent.FindAsync(id);
+            var insuredInsurenceEvent = await context.InsuredInsurenceEvent
+                .Include(i=> i.InsuredesInsurences.Insured)
+                .FirstOrDefaultAsync(i=> i.Id == id);
             if (insuredInsurenceEvent == null)
             {
                 return NotFound();
             }
+            var insuredInsurences = context.InsuredesInsurences.AsQueryable();
+                        
+            ViewData["InsuredesInsurencesId"] = new SelectList(insuredInsurences, "Id", "InsurenceSubject");
+         
+
             return View(insuredInsurenceEvent);
         }
 

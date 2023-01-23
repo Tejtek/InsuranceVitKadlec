@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using InsuranceVitKadlec.Data;
 using InsuranceVitKadlec.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace InsuranceVitKadlec.Controllers
 {
@@ -22,12 +23,19 @@ namespace InsuranceVitKadlec.Controllers
 
 
         // GET: Insureds
-        public async Task<IActionResult> Index()
-        {
-              return View(await context.Insured.ToListAsync());
+        [Authorize]
+        public async Task<IActionResult> Index() 
+        {     
+            if (!this.User.IsInRole("Admin"))
+            {
+                int id = this.GetCurrentInsured().Id;
+                return RedirectToAction("Edit", new { id });
+            }
+            return View(await context.Insured.ToListAsync());
         }
 
         // GET: Insureds/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || context.Insured == null)
@@ -88,7 +96,7 @@ namespace InsuranceVitKadlec.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,BirthDate,PhoneNumber,Street,City,PostCode,Smoker,IsMan,Email,PhotoName")] Insured insured)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,BirthDate,PhoneNumber,Street,City,PostCode,Smoker,IsMan,Email,PhotoName,LoginId")] Insured insured)
         {
             if (id != insured.Id)
             {

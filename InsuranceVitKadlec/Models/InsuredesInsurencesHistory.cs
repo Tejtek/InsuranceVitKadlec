@@ -8,7 +8,12 @@ namespace InsuranceVitKadlec.Models
         public int Id { get; set; }
         public int IdInsuredesInsurences { get; set; }
         public int InsuredId { get; set; }
+
+        public Insured Insured { get; set; }
+        
         public int InsurenceId { get; set; }
+        public Insurence Insurence { get; set; }
+
         [DisplayName("Výše pojistky")]
         public int InsurenceValue { get; set; }
         [DisplayName("Popis")]

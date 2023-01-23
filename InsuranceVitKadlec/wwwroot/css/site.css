@@ -16,3 +16,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+.home-image {
+    background-image: url('../images/minafoto.jpg');
+    background-position:center;
+    background-size:cover;
+    height: 600px;
+    margin: 3em 0em
+}
+.general-container{
+    width:100%;
+
+}
+.general-container-img{
+    width:100%
+   
+}

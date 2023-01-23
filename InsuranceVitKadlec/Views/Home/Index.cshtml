@@ -4,62 +4,52 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1 class="text-center display-4 fw-bold lh-1 mb-3">Pojišťovna Jistota</h1>
+<section class="py-5 text-center home-image">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+           
+        </div>
+    </div>
+</section>
+
+
 
 <p>
     @if (this.User.IsInRole("Admin"))
     {
-        <a asp-action="Create" asp-controller="Articles">Vytvoř nový článek</a>
+        <form method="post">
+            <button type="submit" asp-action="Create" asp-controller="Articles" class="btn btn-secondary">Nový článek</button>
+        </form>
     }
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Content)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Content)
-                </td>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    @foreach (var item in Model)
+    {
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div>
+                        <h3>  @Html.DisplayFor(modelItem => item.Title)</h3>
+                        <span>@Html.DisplayFor(modelItem => item.Author)</span>
+                        <span>@Html.DisplayFor(modelItem => item.CreatedDate)</span>
+                        <p>@Html.DisplayFor(modelItem => item.Content)</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
 
-                @if (this.User.IsInRole("Admin"))
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                }
+                            @if (this.User.IsInRole("Admin"))
+                            {
+                                <form method="post">
+                                    <button type="submit" asp-action="Edit" asp-controller="Articles" asp-route-id="@item.Id" class="btn btn-secondary">Edit</button>
+                                </form>
+                            }
+                        </div>
+                        <small class="text-muted">9 mins</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-            </tr>
-        }
-    </tbody>
-</table>

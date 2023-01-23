@@ -20,7 +20,7 @@ namespace InsuranceVitKadlec.Controllers
             return View(await context.Article.ToListAsync());
         }
 
-        public IActionResult Privacy()
+        public IActionResult AboutUs()
         {
             return View();
         }

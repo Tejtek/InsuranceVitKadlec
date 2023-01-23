@@ -10,17 +10,20 @@
     <h4>InsuredesInsurences</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Insured)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Insured.Id)
-        </dd>
+        @if(this.User.IsInRole("Admin"))
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Insured)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Insured.FullName)
+            </dd>
+         }
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Insurence)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Insurence.Id)
+            @Html.DisplayFor(model => model.Insurence.Name)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.InsurenceValue)

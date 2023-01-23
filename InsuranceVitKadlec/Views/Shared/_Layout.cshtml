@@ -14,18 +14,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid flex justify-content-between align-items-center">
                 <div>
-                    @if (this.User.IsInRole("Admin"))
-                    {
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Pojišťovna Jistota <br />Admin</a>
-                    }
-                    else if (this.User.Identity.IsAuthenticated)
-                    {
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Pojišťovna Jistota <br />@(this.User.Identity.Name)</a>
-                    }
-                    else
-                    {
-                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Pojišťovna Jistota</a>
-                    }
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Pojišťovna Jistota <br> @(ViewBag.FullName) </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -47,13 +36,13 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Insureds" asp-action="Index">Seznam pojištěnců</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="InsurendesInsurences" asp-action="Index">Seznam služeb</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="InsuredesInsurences" asp-action="Index">Seznam služeb</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="InsuredInsurenceEvents" asp-action="Index">Pojistné události</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="InsuredInsurenceEvents" asp-action="Index">Historie-služby</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="InsuredesInsurencesHistories" asp-action="Index">Historie-služby</a>
                             </li>
                         
                         }
@@ -81,7 +70,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Insurences" asp-action="Index">Produkty</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">O nás </a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AboutUs">O nás </a>
                             </li>
                         }
                     </ul>
@@ -123,7 +112,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - InsuranceVitKadlec - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+          
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
