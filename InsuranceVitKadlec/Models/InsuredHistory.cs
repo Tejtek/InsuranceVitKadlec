@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InsuranceVitKadlec.Models
@@ -6,7 +7,7 @@ namespace InsuranceVitKadlec.Models
     public class InsuredHistory
     {
         public int Id { get; set; }
-
+        [DisplayName("Id uživatele")]
         public int IdInsured { get; set; }
         [DisplayName("Jméno")]
         public string Name { get; set; }
@@ -30,7 +31,9 @@ namespace InsuranceVitKadlec.Models
         public string Email { get; set; }
 
         public string PhotoName { get; set; }
+        [DisplayName("Datum změny")]
         public DateTime CreateDate { get; set; }
+        [DisplayName("Typ změny")]
         public string TypeOfChange { get; set; }
     }
 }

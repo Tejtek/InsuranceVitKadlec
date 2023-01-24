@@ -4,12 +4,12 @@
     ViewData["Title"] = "Nabídka produktů";
 }
 
-<h1>Nabídka produktů</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
     @if (this.User.IsInRole("Admin"))
     {
-        <a asp-action="Create">Nový</a>
+        <a asp-action="Create" class="btn btn-primary">Nový</a>
     }
 </p>
 <table class="table">
@@ -36,9 +36,11 @@
                 @if (this.User.IsInRole("Admin"))
                 {
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <div class="form-group d-flex justify-content-start align-content-center mt-3 gap-2">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                        </div>
                     </td>
                 }
         </tr>

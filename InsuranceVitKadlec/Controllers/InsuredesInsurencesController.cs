@@ -111,7 +111,7 @@ namespace InsuranceVitKadlec.Controllers
             {
                 return NotFound();
             }
-            ViewData["InsuredId"] = new SelectList(context.Insured, "Id", "Name", insuredesInsurences.InsuredId);
+            ViewData["InsuredId"] = new SelectList(context.Insured, "Id", "FullName", insuredesInsurences.InsuredId);
             ViewData["InsurenceId"] = new SelectList(context.Insurence, "Id", "Name", insuredesInsurences.InsurenceId);
             return View(insuredesInsurences);
         }

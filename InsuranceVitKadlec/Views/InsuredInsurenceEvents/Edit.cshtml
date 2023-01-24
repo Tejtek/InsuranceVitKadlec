@@ -13,11 +13,11 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label class="control-label">@Model.InsuredesInsurences.Insured.FullName</label>
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold">@Model.InsuredesInsurences.Insured.FullName</label>
             </div>
             <div class="form-group">
-                <label asp-for="InsuredesInsurencesId" class="control-label"></label>
+                <label class="control-label">Název služby</label>
                 <select asp-for="InsuredesInsurencesId" class="form-control" asp-items="@ViewBag.InsuredesInsurencesId"></select>
                 <span asp-validation-for="InsuredesInsurencesId" class="text-danger"></span>
             </div>
@@ -41,14 +41,16 @@
                 <input asp-for="DamageDate" class="form-control" />
                 <span asp-validation-for="DamageDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            
+            <div class="form-group d-flex justify-content-start align-content-center mt-3">
+                <input type="submit" value="Save" class="btn btn-success me-2" />
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
             </div>
+
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 

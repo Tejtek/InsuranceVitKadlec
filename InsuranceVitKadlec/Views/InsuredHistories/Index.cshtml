@@ -1,20 +1,23 @@
-﻿@model IEnumerable<InsuranceVitKadlec.Models.Insured>
+﻿@model IEnumerable<InsuranceVitKadlec.Models.InsuredHistory>
 
-
-    @if (this.User.IsInRole("Admin"))
-    {
-        ViewData["Title"] = "Seznam pojištěnců";
-    }
-    else if (this.User.Identity.IsAuthenticated)
-    {
-        ViewData["Title"] = "Seznam pojištěnců";
-    }
+@{
+    ViewData["Title"] = "Historie evidence uživatelů";
+}
 
 <h1>@ViewData["Title"]</h1>
 
+<p>
+    <!-- <a asp-action="Create">Create New</a>-->
+</p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdInsured)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeOfChange)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -46,14 +49,41 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PhotoName)
+                @Html.DisplayNameFor(model => model.CreateDate)
             </th>
+           
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdInsured)
+            </td>
+            <td class="fw-bold">
+                <div>
+                        @if (item.TypeOfChange== "Inserted")
+                        {
+                            <span class="text-success">
+                                @Html.DisplayFor(modelItem => item.TypeOfChange)
+                            </span>
+                        }
+                        else if (item.TypeOfChange == "Updated")
+                        {
+                            <span class="text-warning">
+                                @Html.DisplayFor(modelItem => item.TypeOfChange)
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">
+                                @Html.DisplayFor(modelItem => item.TypeOfChange)
+                            </span>
+                        }
+                </div>
+                
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -85,24 +115,10 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                    @if (item.PhotoName != null)
-                    {
-                        <img src="~/imagesclients/@item.PhotoName" class="insured-img-list" />
-                    }
-                    else
-                    {
-                        <img src="~/imagesclients/default.png" alt="Nemá profilovou fotku" class="insured-img-list" />
-
-                    }
+                @Html.DisplayFor(modelItem => item.CreateDate)
             </td>
-            <td>
-                 <div class="form-group d-flex justify-content-start align-content-center mt-3 gap-2">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                 </div>
-
-            </td>
+           
+           
         </tr>
 }
     </tbody>

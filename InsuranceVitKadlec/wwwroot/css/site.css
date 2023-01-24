@@ -31,3 +31,11 @@ body {
     width:100%
    
 }
+.insured-img {
+    width: 500px;
+    height: 500px;
+}
+.insured-img-list {
+    width: 75px;
+    height: 75px;
+}

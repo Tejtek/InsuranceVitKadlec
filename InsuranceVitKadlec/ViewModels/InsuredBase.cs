@@ -35,15 +35,16 @@ namespace InsuranceVitKadlec.ViewModels
         [Required]
         public bool IsMan { get; set; }
         [EmailAddress]
-        [DisplayName("el.adresa")]
+        [DisplayName("Email")]
         [Required]
         public string Email { get; set; }
-        [DisplayName("Místo uložení profilové fotky")]
+        [DisplayName("Profilové foto")]
         public string PhotoName { get; set; }
         
         
         // proměnná pouze ke spojení - nesmí se aktualizovat do DB
         [NotMapped]
+        [DisplayName("Celé jméno")]
         public string FullName => Name + " " + Surname;
 
 

@@ -1,12 +1,12 @@
 ﻿@model InsuranceVitKadlec.Models.InsuredInsurenceEvent
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Vytvoření nové pojistné události";
 }
 
-<h1>Create</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>InsuredInsurenceEvent</h4>
+<h4>Zadej novou pojistnou událost</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -37,14 +37,15 @@
                 <input asp-for="DamageDate" class="form-control" />
                 <span asp-validation-for="DamageDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group d-flex justify-content-start align-content-center mt-3">
+                <input type="submit" value="Create" class="btn btn-primary me-3" />
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 

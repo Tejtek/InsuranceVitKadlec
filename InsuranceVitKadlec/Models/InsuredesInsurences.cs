@@ -13,8 +13,9 @@ namespace InsuranceVitKadlec.Models
         public Insured Insured { get; set; }
 
         [ForeignKey(nameof(Insurence))]
+        [DisplayName("Název služby")]
         public int InsurenceId { get; set; }
-        
+        [DisplayName("Název služby")]
         public Insurence Insurence { get; set; }
         [DisplayName ("Výše pojistky")]
         public int InsurenceValue { get; set; }
